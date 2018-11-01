@@ -1,0 +1,52 @@
+# Stream Device Protocol for the Anton Paar DMA 4500 M
+# Density Meter.
+#
+# Andreas Hagelberg
+# European Spallation Source ERIC
+# March 2018
+
+replytimeout = 2000;
+readtimeout  = 2000;
+terminator = CR;
+
+# Make sure stream buffer is empty
+@init { out " " }
+
+set_temperature { out "settemperature %.2f"; } # in "%{accepted|wrong parameter value|not allowed during measurement}"; }
+start { out "start"; in "%{measurement already started|measurement started}" }
+abort { out "abort"; in "measurement %{aborted|not started}" }
+finished { out "finished"; in "measurement %{not started|not finished|finished}" }
+data { out "getdata"; in "%{data: %f;%f;%f;%s|no new data available}" }
+units { out "getdataunit"; in "data unit: %s" }
+serial { out "getid"; in "serial number: %s" }
+method { out "getmethodname"; in "method name: %s" }
+legend { out "getdatahead"; in "data head: %s" }
+
+density_unit {
+  out "getdataunit";
+  in "data unit: %[^;];%*[^;];%*[^;];%*s";
+}
+
+temp_unit {
+  in "data unit: %*[^;];%*[^;];%[^;];%*s";
+}
+
+get_data {
+  out "getdata";
+}
+
+density {
+  in "data: %f;%*f;%*f;%*s";
+}
+
+specific_gravity {
+  in "data: %*f;%f;%*f;%*s";
+}
+
+temperature {
+  in "data: %*f;%*f;%f;%*s";
+}
+
+condition {
+  in "data: %*f;%*f;%*f;%s";
+}

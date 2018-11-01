@@ -1,0 +1,21 @@
+# README #
+
+### What is this repository for? ###
+This repository contains the basic source for an Anton Paar DMA 4500 M density
+meter EPICS IOC. It is very basic and allows only setting temperature, starting
+measurement and reading out densty and temperature once measurement is finished.
+It has no error handling and there are no doubt bugs. It needs major
+improvements before being used in a production environment.
+
+The startup script assumes the DMA4500M is connected via a Moxa
+ethernet-to-RS-232 converter or equivalent.
+
+OPI (CSS-Studio) file is included
+
+### History ###
+2018-04-10 - Initial version by Andreas Hagelberg at ESS (Scientific Activities Division)
+2018-04-13 - Add manual for DMA4500M and flow chart over IOC
+
+### Who do I talk to? ###
+
+* Andreas Hagelberg (andreas.hagelberg@esss.se)
