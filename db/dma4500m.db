@@ -2,7 +2,7 @@ record(ao, "$(P):set_temperature") {
   field(DESC, "Sample temperature")
   field(DTYP, "stream")
   field(OUT, "@dma4500m.protocol set_temperature $(PORT)")
-  field(EGU, "°C")
+  field(EGU, "C")
   field(PREC, "2")
   field(DRVL, "0")
   field(DRVH, "90")
@@ -101,6 +101,6 @@ record(ai, "$(P):density") {
   field(DTYP, "stream")
   field(INP, "@dma4500m.protocol density dma4500m")
   field(SCAN, "I/O Intr")
-  field(EGU, "g/cm³")
+  field(EGU, "g/cm^3")
   field(PREC, "5")
 }
