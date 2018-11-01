@@ -92,7 +92,7 @@ record(ai, "$(P):temperature") {
   field(DTYP, "stream")
   field(INP, "@dma4500m.protocol temperature dma4500m")
   field(SCAN, "I/O Intr")
-  field(EGU, "°C")
+  field(EGU, "C")
   field(PREC, "2")
 }
 
