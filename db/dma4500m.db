@@ -51,7 +51,7 @@ record(calc, "$(P):data_available") {
 record(mbbi, "$(P):finished") {
   field(DESC, "Measurement status")
   field(DTYP, "stream")
-  field(INP, "@dma4500m.protocol finished dma4500m")
+  field(INP, "@dma4500m.protocol finished $(PORT)")
   field(ZRVL, "0")
   field(ONVL, "1")
   field(TWVL, "2")
@@ -69,7 +69,7 @@ record(mbbi, "$(P):finished") {
 record(bo, "$(P):get_data") {
   field(DESC, "Read sample data from device")
   field(DTYP, "stream")
-  field(OUT, "@dma4500m.protocol get_data dma4500m")
+  field(OUT, "@dma4500m.protocol get_data $(PORT)")
   field(SDIS, "$(P):data_available")
   field(DISA, "0")
   field(DISV, "0")
@@ -90,7 +90,7 @@ record(ao, "$(P):reset_finished") {
 record(ai, "$(P):temperature") {
   field(DESC, "Sample temperature")
   field(DTYP, "stream")
-  field(INP, "@dma4500m.protocol temperature dma4500m")
+  field(INP, "@dma4500m.protocol temperature $(PORT)")
   field(SCAN, "I/O Intr")
   field(EGU, "C")
   field(PREC, "2")
@@ -99,7 +99,7 @@ record(ai, "$(P):temperature") {
 record(ai, "$(P):density") {
   field(DESC, "Sample density")
   field(DTYP, "stream")
-  field(INP, "@dma4500m.protocol density dma4500m")
+  field(INP, "@dma4500m.protocol density $(PORT)")
   field(SCAN, "I/O Intr")
   field(EGU, "g/cm^3")
   field(PREC, "5")
