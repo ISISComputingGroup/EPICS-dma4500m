@@ -30,10 +30,11 @@ record(longin, "$(P):automeasure:time")
 record(calcout, "$(P):automeasure")
 {
   field(INPA, "$(P):automeasure:time NPP")
-  field(CALC, "A=0?1:(B:=(B=0?A:B-1);B)")
+  field(CALC, "B:=(B=0?A:B-1);(A=0?1:B)")
   field(OOPT, "When Zero")
   field(DOPT, "1")
-  field(OUT, "$(P):start PP")
+#  field(OUT, "$(P):start PP")
+  field(OUT, "$(P):start CA")
   field(SDIS, "$(P):measuring")
   field(DISV, "1")
   field(SCAN, "1 second")
@@ -54,7 +55,7 @@ record(calc, "$(P):measuring") {
   field(INPB, "$(P):finished")
   field(CALC, "A == 1 || B == 1")
   field(FLNK, "$(P):reset_start")
-  field(archive, "VAL")
+  info(archive, "VAL")
 }
 
 record(bo, "$(P):reset_start") {
@@ -114,7 +115,7 @@ record(ai, "$(P):temperature") {
   field(SCAN, "I/O Intr")
   field(EGU, "C")
   field(PREC, "2")
-  field(archive, "VAL")
+  info(archive, "VAL")
 }
 
 record(ai, "$(P):density") {
@@ -124,5 +125,5 @@ record(ai, "$(P):density") {
   field(SCAN, "I/O Intr")
   field(EGU, "g/cm^3")
   field(PREC, "5")
-  field(archive, "VAL")
+  info(archive, "VAL")
 }
