@@ -33,21 +33,10 @@ temp_unit {
 
 get_data {
   out "getdata";
-}
-
-density {
-  in "data: %f;%*f;%*s";
+  in "data: %(\$1)f;%(\$2)f;%(\$3)s";
 }
 
 # This can not be read in the mode used at ISIS
 specific_gravity {
   in "data: %*f;%f;%*f;%*s";
-}
-
-temperature {
-  in "data: %*f;%f;%*s";
-}
-
-condition {
-  in "data: %*f;%*f;%s";
 }
