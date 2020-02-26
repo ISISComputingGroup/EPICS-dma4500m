@@ -91,11 +91,21 @@ record(mbbi, "$(P):finished") {
 
 record(bo, "$(P):get_data") {
   field(DESC, "Read sample data from device")
-  field(DTYP, "stream")
-  field(OUT, "@dma4500m.protocol get_data($(P):density,$(P):temperature,$(P):condition) $(PORT)")
   field(SDIS, "$(P):data_available")
   field(DISA, "0")
   field(DISV, "0")
+  field(FLNK, "$(P):get_$(MEASUREMENT_MODE)")
+}
+
+record(bo, "$(P):get_density_only") {
+  field(DTYP, "stream")
+  field(OUT, "@dma4500m.protocol get_data_density_only($(P):density,$(P):temperature,$(P):condition) $(PORT)")
+  field(FLNK, "$(P):reset")
+}
+
+record(bo, "$(P):get_density_and_specific_gravity") {
+  field(DTYP, "stream")
+  field(OUT, "@dma4500m.protocol get_data_density_plus_specific_gravity($(P):density,$(P):specific_gravity,$(P):temperature,$(P):condition) $(PORT)")
   field(FLNK, "$(P):reset")
 }
 
@@ -115,6 +125,11 @@ record(ai, "$(P):temperature") {
   field(EGU, "C")
   field(PREC, "2")
   info(archive, "VAL")
+}
+
+# Not used at ISIS
+record(ai, "$(P):specific_gravity") {
+  field(DESC, "Sample specific gravity")
 }
 
 record(ai, "$(P):density") {

@@ -31,12 +31,12 @@ temp_unit {
   in "data unit: %*[^;];%*[^;];%[^;];%*s";
 }
 
-get_data {
+get_data_density_only {
   out "getdata";
   in "data: %(\$1)f;%(\$2)f;%(\$3)s";
 }
 
-# This can not be read in the mode used at ISIS
-specific_gravity {
-  in "data: %*f;%f;%*f;%*s";
+get_data_density_plus_specific_gravity {
+  out "getdata";
+  in "data: %(\$1)f;%(\$2)f;%(\$3)f;%(\$4)s";
 }
