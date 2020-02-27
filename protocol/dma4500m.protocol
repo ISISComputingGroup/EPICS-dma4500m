@@ -40,3 +40,8 @@ get_data_density_plus_specific_gravity {
   out "getdata";
   in "data: %(\$1)f;%(\$2)f;%(\$3)f;%(\$4)s";
 }
+
+get_temperature_setpoint {
+  out "getrawdata";
+  in "%*f;%*f;%f;%*s";
+}

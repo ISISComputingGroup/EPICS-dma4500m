@@ -129,6 +129,15 @@ record(ao, "$(P):TEMPERATURE:SP") {
   field(SDIS, "$(P):_MEASURING")
 }
 
+record(ai, "$(P):TEMPERATURE:SP:RBV") {
+  field(DESC, "Readback sample temperature setpoint")
+  field(SCAN, "2 second")
+  field(DTYP, "stream")
+  field(INP, "@dma4500m.protocol get_temperature_setpoint $(PORT)")
+  field(EGU, "C")
+  field(PREC, "2")
+}
+
 # Not used at ISIS
 record(ai, "$(P):SPECIFIC_GRAVITY") {
   field(DESC, "Sample specific gravity")
