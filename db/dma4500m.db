@@ -31,7 +31,7 @@ record(longin, "$(P):AUTOMEASURE:TIME")
 
 record(fanout, "$(P):_START_MEASURING") {
   field(LNK1, "$(P):_UPDATE_FLAGS")
-  field(LNK2, "$(P):FINISHED")
+  field(LNK2, "$(P):MEASUREMENT")
   info(archive, "VAL")
 }
 
@@ -42,7 +42,7 @@ record(fanout, "$(P):_UPDATE_FLAGS") {
 
 record(calc, "$(P):_MEASURING") {
   field(INPA, "$(P):START")
-  field(INPB, "$(P):FINISHED")
+  field(INPB, "$(P):MEASUREMENT")
   field(CALC, "A == 1 || B == 1")
   field(FLNK, "$(P):_RESET_START")
   info(archive, "VAL")
@@ -55,21 +55,21 @@ record(bo, "$(P):_RESET_START") {
 }
 
 record(calc, "$(P):_DATA_AVAILABLE") {
-  field(INPA, "$(P):FINISHED")
+  field(INPA, "$(P):MEASUREMENT")
   field(CALC, "A == 2")
   field(FLNK, "$(P):_GET_DATA")
 }
 
-record(mbbi, "$(P):FINISHED") {
+record(mbbi, "$(P):MEASUREMENT") {
   field(DESC, "Measurement status")
   field(DTYP, "stream")
   field(INP, "@dma4500m.protocol finished $(PORT)")
   field(ZRVL, "0")
   field(ONVL, "1")
   field(TWVL, "2")
-  field(ZRST, "not started")
-  field(ONST, "not finished")
-  field(TWST, "finished")
+  field(ZRST, "ready")
+  field(ONST, "measuring")
+  field(TWST, "done")
   field(SCAN, "2 second")
   field(DISA, "0")
   field(DISV, "0")
@@ -77,6 +77,7 @@ record(mbbi, "$(P):FINISHED") {
   field(FLNK, "$(P):_UPDATE_FLAGS")
 }
 
+alias("$(P):START", "$(P):MEASUREMENT:SP")
 
 record(bo, "$(P):_GET_DATA") {
   field(DESC, "Read sample data from device")
@@ -105,8 +106,8 @@ record(fanout, "$(P):_RESET") {
 
 record(ao, "$(P):_RESET_FINISHED") {
   field(VAL, "0")
-  field(OUT, "$(P):FINISHED.VAL")
-  field(FLNK, "$(P):FINISHED")
+  field(OUT, "$(P):MEASUREMENT.VAL")
+  field(FLNK, "$(P):MEASUREMENT")
 }
 
 record(ai, "$(P):TEMPERATURE") {
