@@ -1,77 +1,66 @@
-record(ao, "$(P):set_temperature") {
-  field(DESC, "Sample temperature")
-  field(DTYP, "stream")
-  field(OUT, "@dma4500m.protocol set_temperature $(PORT)")
-  field(EGU, "C")
-  field(PREC, "2")
-  field(DRVL, "0")
-  field(DRVH, "90")
-  field(DISV, "1")
-  field(DISA, "0")
-  field(SDIS, "$(P):measuring")
-}
-
-record(bo, "$(P):start") {
+record(bo, "$(P):START") {
   field(DESC, "Start measuring")
   field(DTYP, "stream")
   field(OUT, "@dma4500m.protocol start $(PORT)")
   field(DISV, "1")
-  field(SDIS, "$(P):measuring")
-  field(FLNK, "$(P):start_measuring")
+  field(SDIS, "$(P):_MEASURING")
+  field(FLNK, "$(P):_START_MEASURING")
 }
 
+alias("$(P):START", "$(P):START:SP")
+
 ## set to > 0 for auto measurement
-record(longin, "$(P):automeasure:time")
+record(longin, "$(P):AUTOMEASURE:TIME")
 {
     field(VAL, 0)
     info(autosaveFields, "VAL")
 }
 
 # Does not work
-#record(calcout, "$(P):automeasure")
+#record(calcout, "$(P):AUTOMEASURE")
 #{
-#  field(INPA, "$(P):automeasure:time NPP")
+#  field(INPA, "$(P):AUTOMEASURE:TIME NPP")
 #  field(CALC, "A=0?1:(B:=(B=0?A:B-1);B)")
 #  field(OOPT, "When Zero")
 #  field(DOPT, "1")
-#  field(OUT, "$(P):start PP")
-#  field(SDIS, "$(P):measuring")
+#  field(OUT, "$(P):START PP")
+#  field(SDIS, "$(P):_MEASURING")
 #  field(DISV, "1")
 #  field(SCAN, "1 second")
 #}
 
-record(fanout, "$(P):start_measuring") {
-  field(LNK1, "$(P):update_flags")
-  field(LNK2, "$(P):finished")
+record(fanout, "$(P):_START_MEASURING") {
+  field(LNK1, "$(P):_UPDATE_FLAGS")
+  field(LNK2, "$(P):FINISHED")
   info(archive, "VAL")
 }
 
-record(fanout, "$(P):update_flags") {
-  field(LNK1, "$(P):measuring")
-  field(LNK2, "$(P):data_available")
+record(fanout, "$(P):_UPDATE_FLAGS") {
+  field(LNK1, "$(P):_MEASURING")
+  field(LNK2, "$(P):_DATA_AVAILABLE")
 }
 
-record(calc, "$(P):measuring") {
-  field(INPA, "$(P):start")
-  field(INPB, "$(P):finished")
+record(calc, "$(P):_MEASURING") {
+  field(INPA, "$(P):START")
+  field(INPB, "$(P):FINISHED")
   field(CALC, "A == 1 || B == 1")
-  field(FLNK, "$(P):reset_start")
+  field(FLNK, "$(P):_RESET_START")
   info(archive, "VAL")
 }
 
-record(bo, "$(P):reset_start") {
+record(bo, "$(P):_RESET_START") {
   field(VAL, "0")
-  field(OUT, "$(P):start.VAL")
+  field(OUT, "$(P):START.VAL")
   info(archive, "VAL")
 }
 
-record(calc, "$(P):data_available") {
-  field(INPA, "$(P):finished")
+record(calc, "$(P):_DATA_AVAILABLE") {
+  field(INPA, "$(P):FINISHED")
   field(CALC, "A == 2")
-  field(FLNK, "$(P):get_data")
+  field(FLNK, "$(P):_GET_DATA")
 }
 
-record(mbbi, "$(P):finished") {
+record(mbbi, "$(P):FINISHED") {
   field(DESC, "Measurement status")
   field(DTYP, "stream")
   field(INP, "@dma4500m.protocol finished $(PORT)")
@@ -84,62 +73,75 @@ record(mbbi, "$(P):finished") {
   field(SCAN, "2 second")
   field(DISA, "0")
   field(DISV, "0")
-  field(SDIS, "$(P):measuring")
-  field(FLNK, "$(P):update_flags")
+  field(SDIS, "$(P):_MEASURING")
+  field(FLNK, "$(P):_UPDATE_FLAGS")
 }
 
 
-record(bo, "$(P):get_data") {
+record(bo, "$(P):_GET_DATA") {
   field(DESC, "Read sample data from device")
-  field(SDIS, "$(P):data_available")
+  field(SDIS, "$(P):_DATA_AVAILABLE")
   field(DISA, "0")
   field(DISV, "0")
-  field(FLNK, "$(P):get_$(MEASUREMENT_MODE)")
+  field(FLNK, "$(P):_GET_$(MEASUREMENT_MODE)")
 }
 
-record(bo, "$(P):get_density_only") {
+record(bo, "$(P):_GET_DENSITY_ONLY") {
   field(DTYP, "stream")
-  field(OUT, "@dma4500m.protocol get_data_density_only($(P):density,$(P):temperature,$(P):condition) $(PORT)")
-  field(FLNK, "$(P):reset")
+  field(OUT, "@dma4500m.protocol get_data_density_only($(P):DENSITY,$(P):TEMPERATURE,$(P):CONDITION) $(PORT)")
+  field(FLNK, "$(P):_RESET")
 }
 
-record(bo, "$(P):get_density_and_specific_gravity") {
+record(bo, "$(P):_GET_DENSITY_AND_SPECIFIC_GRAV") {
   field(DTYP, "stream")
-  field(OUT, "@dma4500m.protocol get_data_density_plus_specific_gravity($(P):density,$(P):specific_gravity,$(P):temperature,$(P):condition) $(PORT)")
-  field(FLNK, "$(P):reset")
+  field(OUT, "@dma4500m.protocol get_data_density_plus_specific_gravity($(P):DENSITY,$(P):SPECIFIC_GRAVITY,$(P):TEMPERATURE,$(P):CONDITION) $(PORT)")
+  field(FLNK, "$(P):_RESET")
 }
 
-record(fanout, "$(P):reset") {
-  field(LNK1, "$(P):reset_finished")
-  field(LNK2, "$(P):update_flags")
+record(fanout, "$(P):_RESET") {
+  field(LNK1, "$(P):_RESET_FINISHED")
+  field(LNK2, "$(P):_UPDATE_FLAGS")
 }
 
-record(ao, "$(P):reset_finished") {
+record(ao, "$(P):_RESET_FINISHED") {
   field(VAL, "0")
-  field(OUT, "$(P):finished.VAL")
-  field(FLNK, "$(P):finished")
+  field(OUT, "$(P):FINISHED.VAL")
+  field(FLNK, "$(P):FINISHED")
 }
 
-record(ai, "$(P):temperature") {
+record(ai, "$(P):TEMPERATURE") {
   field(DESC, "Sample temperature")
   field(EGU, "C")
   field(PREC, "2")
   info(archive, "VAL")
 }
 
+record(ao, "$(P):TEMPERATURE:SP") {
+  field(DESC, "Set sample temperature")
+  field(DTYP, "stream")
+  field(OUT, "@dma4500m.protocol set_temperature $(PORT)")
+  field(EGU, "C")
+  field(PREC, "2")
+  field(DRVL, "0")
+  field(DRVH, "90")
+  field(DISV, "1")
+  field(DISA, "0")
+  field(SDIS, "$(P):_MEASURING")
+}
+
 # Not used at ISIS
-record(ai, "$(P):specific_gravity") {
+record(ai, "$(P):SPECIFIC_GRAVITY") {
   field(DESC, "Sample specific gravity")
 }
 
-record(ai, "$(P):density") {
+record(ai, "$(P):DENSITY") {
   field(DESC, "Sample density")
   field(EGU, "g/cm^3")
   field(PREC, "5")
   info(archive, "VAL")
 }
 
-record(stringin, "$(P):condition") {
+record(stringin, "$(P):CONDITION") {
   field(DESC, "Measurement condition")
   info(archive, "VAL")
 }
