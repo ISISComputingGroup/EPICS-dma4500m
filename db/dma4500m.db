@@ -75,6 +75,7 @@ record(mbbi, "$(P):MEASUREMENT") {
   field(DISV, "0")
   field(SDIS, "$(P):_MEASURING")
   field(FLNK, "$(P):_UPDATE_FLAGS")
+  info(INTEREST, "MEDIUM")
 }
 
 alias("$(P):START", "$(P):MEASUREMENT:SP")
@@ -115,6 +116,7 @@ record(ai, "$(P):TEMPERATURE") {
   field(EGU, "C")
   field(PREC, "2")
   info(archive, "VAL")
+  info(INTEREST, "HIGH")
 }
 
 record(ao, "$(P):TEMPERATURE:SP") {
@@ -137,6 +139,7 @@ record(ai, "$(P):TEMPERATURE:SP:RBV") {
   field(INP, "@dma4500m.protocol get_temperature_setpoint $(PORT)")
   field(EGU, "C")
   field(PREC, "2")
+  info(INTEREST, "MEDIUM")
 }
 
 # Not used at ISIS
@@ -149,9 +152,11 @@ record(ai, "$(P):DENSITY") {
   field(EGU, "g/cm^3")
   field(PREC, "5")
   info(archive, "VAL")
+  info(INTEREST, "HIGH")
 }
 
 record(stringin, "$(P):CONDITION") {
   field(DESC, "Measurement condition")
   info(archive, "VAL")
+  info(INTEREST, "HIGH")
 }
