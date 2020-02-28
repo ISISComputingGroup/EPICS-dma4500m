@@ -5,8 +5,8 @@
 # European Spallation Source ERIC
 # March 2018
 
-replytimeout = 2000;
-readtimeout  = 2000;
+replytimeout = 5000;
+readtimeout  = 5000;
 terminator = CR;
 
 # Make sure stream buffer is empty
