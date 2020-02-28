@@ -143,6 +143,7 @@ record(ai, "$(P):TEMPERATURE:SP:RBV") {
   field(EGU, "C")
   field(PREC, "2")
   info(INTEREST, "MEDIUM")
+  info(alarm, "DMA4500M")
 }
 
 # Not used at ISIS
