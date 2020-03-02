@@ -1,7 +1,7 @@
 record(bo, "$(P):START") {
   field(DESC, "Start measuring")
   field(DTYP, "stream")
-  field(OUT, "@dma4500m.protocol start $(PORT)")
+  field(OUT, "@dma4500m.proto start $(PORT)")
   field(DISV, "1")
   field(SDIS, "$(P):_MEASURING")
   field(FLNK, "$(P):_START_MEASURING")
@@ -66,7 +66,7 @@ record(calc, "$(P):_DATA_AVAILABLE") {
 record(mbbi, "$(P):MEASUREMENT") {
   field(DESC, "Measurement status")
   field(DTYP, "stream")
-  field(INP, "@dma4500m.protocol finished $(PORT)")
+  field(INP, "@dma4500m.proto finished $(PORT)")
   field(ZRVL, "0")
   field(ONVL, "1")
   field(TWVL, "2")
@@ -93,13 +93,13 @@ record(bo, "$(P):_GET_DATA") {
 
 record(bo, "$(P):_GET_DENSITY_ONLY") {
   field(DTYP, "stream")
-  field(OUT, "@dma4500m.protocol get_data_density_only($(P):DENSITY,$(P):TEMPERATURE,$(P):CONDITION) $(PORT)")
+  field(OUT, "@dma4500m.proto get_data_density_only($(P):DENSITY,$(P):TEMPERATURE,$(P):CONDITION) $(PORT)")
   field(FLNK, "$(P):_RESET")
 }
 
 record(bo, "$(P):_GET_DENSITY_AND_SPECIFIC_GRAV") {
   field(DTYP, "stream")
-  field(OUT, "@dma4500m.protocol get_data_density_plus_specific_gravity($(P):DENSITY,$(P):SPECIFIC_GRAVITY,$(P):TEMPERATURE,$(P):CONDITION) $(PORT)")
+  field(OUT, "@dma4500m.proto get_data_density_plus_specific_gravity($(P):DENSITY,$(P):SPECIFIC_GRAVITY,$(P):TEMPERATURE,$(P):CONDITION) $(PORT)")
   field(FLNK, "$(P):_RESET")
 }
 
@@ -125,7 +125,7 @@ record(ai, "$(P):TEMPERATURE") {
 record(ao, "$(P):TEMPERATURE:SP") {
   field(DESC, "Set sample temperature")
   field(DTYP, "stream")
-  field(OUT, "@dma4500m.protocol set_temperature $(PORT)")
+  field(OUT, "@dma4500m.proto set_temperature $(PORT)")
   field(EGU, "C")
   field(PREC, "2")
   field(DRVL, "0")
@@ -139,7 +139,7 @@ record(ai, "$(P):TEMPERATURE:SP:RBV") {
   field(DESC, "Readback sample temperature setpoint")
   field(SCAN, "2 second")
   field(DTYP, "stream")
-  field(INP, "@dma4500m.protocol get_temperature_setpoint $(PORT)")
+  field(INP, "@dma4500m.proto get_temperature_setpoint $(PORT)")
   field(EGU, "C")
   field(PREC, "2")
   info(INTEREST, "MEDIUM")
