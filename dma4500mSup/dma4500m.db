@@ -93,7 +93,7 @@ record(bo, "$(P):_GET_DATA") {
 
 record(bo, "$(P):_GET_DENSITY_ONLY") {
   field(DTYP, "stream")
-  field(OUT, "@dma4500m.proto get_data_density_only($(P):DENSITY,$(P):TEMPERATURE,$(P):CONDITION) $(PORT)")
+  field(OUT, "@dma4500m.proto get_data_density_only($(P):DENSITY:RAW.A,$(P):TEMPERATURE:RAW.A,$(P):CONDITION) $(PORT)")
   field(FLNK, "$(P):_RESET")
 }
 
