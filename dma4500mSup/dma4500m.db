@@ -104,11 +104,6 @@ record(bo, "$(P)_GET_DENSITY_ONLY") {
   field(OUT, "@dma4500m.proto get_data_density_only($(P)DENSITY:RAW.A,$(P)TEMPERATURE:RAW.A,$(P)CONDITION) $(PORT)")
 }
 
-record(bo, "$(P)_GET_DENSITY_AND_SPECIFIC_GRAV") {
-  field(DTYP, "stream")
-  field(OUT, "@dma4500m.proto get_data_density_plus_specific_gravity($(P)DENSITY,$(P)SPECIFIC_GRAVITY,$(P)TEMPERATURE,$(P)CONDITION) $(PORT)")
-}
-
 record(ai, "$(P)TEMPERATURE") {
   field(DESC, "Sample temperature")
   field(EGU, "C")
@@ -139,11 +134,6 @@ record(ai, "$(P)TEMPERATURE:SP:RBV") {
   field(PREC, "2")
   info(INTEREST, "MEDIUM")
   info(alarm, "DMA4500M")
-}
-
-# Not used at ISIS
-record(ai, "$(P)SPECIFIC_GRAVITY") {
-  field(DESC, "Sample specific gravity")
 }
 
 record(ai, "$(P)DENSITY") {
