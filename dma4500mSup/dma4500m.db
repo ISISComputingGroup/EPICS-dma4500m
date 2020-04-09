@@ -23,7 +23,7 @@ alias("$(P)AUTOMEASURE:FREQ", "$(P)AUTOMEASURE:FREQ:SP")
 record(calcout, "$(P)AUTOMEASURE")
 {
   field(INPA, "$(P)AUTOMEASURE:FREQ NPP")
-  field(CALC, "A=0?1:VAL=-1?A:VAL-1")
+  field(CALC, "A=0?1:VAL=0?A:VAL-1")
   field(OOPT, "When Zero")
   field(DOPT, "1")
   field(OUT, "$(P)START PP")
