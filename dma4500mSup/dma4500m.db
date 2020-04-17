@@ -9,10 +9,16 @@ record(bo, "$(P)START") {
 
 alias("$(P)START", "$(P)START:SP")
 
-## set to > 0 for auto measurement
-record(longin, "$(P)AUTOMEASURE:FREQ")
-{
-  field(DESC, "Automeasurement frequency; 0 to disable")
+record(bi, "$(P)AUTOMEASURE:ENABLED") {
+  field(DESC, "Enable automeasure mode")
+  field(VAL, 0)
+  info(autosaveFields, "VAL")
+}
+
+alias("$(P)AUTOMEASURE:ENABLED", "$(P)AUTOMEASURE:ENABLED:SP")
+
+record(longin, "$(P)AUTOMEASURE:FREQ") {
+  field(DESC, "Automeasurement interval")
   field(VAL, 0)
   field(EGU, "s")
   info(autosaveFields, "VAL")
@@ -20,10 +26,10 @@ record(longin, "$(P)AUTOMEASURE:FREQ")
 
 alias("$(P)AUTOMEASURE:FREQ", "$(P)AUTOMEASURE:FREQ:SP")
 
-record(calcout, "$(P)AUTOMEASURE")
-{
+record(calcout, "$(P)AUTOMEASURE") {
   field(INPA, "$(P)AUTOMEASURE:FREQ NPP")
-  field(CALC, "A=0?1:VAL=0?A:VAL-1")
+  field(INPB, "$(P)AUTOMEASURE:ENABLED NPP")
+  field(CALC, "B=0?MAX(A,1):VAL=0?A:VAL-1")
   field(OOPT, "When Zero")
   field(DOPT, "1")
   field(OUT, "$(P)START PP")
