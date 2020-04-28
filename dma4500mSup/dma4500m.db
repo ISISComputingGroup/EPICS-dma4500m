@@ -102,7 +102,7 @@ record(bo, "$(P)_GET_DATA") {
   field(DISV, "0")
   field(VAL, "0")
   field(OUT, "$(P)_DATA_AVAILABLE PP")
-  field(FLNK, "$(P)_GET_$(MEASUREMENT_MODE)")
+  field(FLNK, "$(P)_GET_DENSITY_ONLY")
 }
 
 record(bo, "$(P)_GET_DENSITY_ONLY") {
