@@ -7,6 +7,7 @@
 
 replytimeout = 5000;
 readtimeout  = 5000;
+locktimeout = 10000;
 terminator = CR;
 
 # Make sure stream buffer is empty
